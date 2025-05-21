@@ -1,0 +1,19 @@
+{
+	"name": "@repo/zodschemas",
+	"version": "1.0.0",
+	"description": "",
+	"main": "./dist/userSchema.js",
+	"exports": {
+		"./zod": "./dist/userSchema.js"
+	},
+	"scripts": {
+		"dev":"tsc -b && node ./dist/userSchema.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@repo/typescript-config": "workspace:*",
+		"zod": "^3.21.4"
+	}
+}
