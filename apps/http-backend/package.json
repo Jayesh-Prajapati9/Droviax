@@ -10,13 +10,17 @@
 	},
 	"keywords": [],
 	"author": "",
-	"license": "ISC","type": "commonjs",
+	"license": "ISC",
+	"type": "commonjs",
 	"devDependencies": {
-		"@types/express": "^5.0.1",
-		"@types/jsonwebtoken": "^9.0.9",
-		"jsonwebtoken": "^9.0.2",
 		"@repo/backend-common": "workspace:*",
 		"@repo/typescript-config": "workspace:*",
-    "@repo/zodschemas":"workspace:*"
+		"@repo/zodschemas": "workspace:*",
+		"@types/express": "^5.0.1",
+		"@types/jsonwebtoken": "^9.0.9",
+		"jsonwebtoken": "^9.0.2"
+	},
+	"dependencies": {
+		"@repo/db": "workspace:*"
 	}
 }

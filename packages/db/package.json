@@ -1,21 +1,22 @@
 {
-	"name": "@repo/backend-common",
+	"name": "@repo/db",
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
-	"type": "commonjs",
 	"exports": {
-		"./config": "./src/config.ts"
+		"./prismaClient": "./src/index.ts"
 	},
 	"scripts": {
-		"dev": "tsc -b && node ./dist/config.js"
+		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
 		"@repo/typescript-config": "workspace:*",
-		"@types/node": "^22.15.3",
-		"dotenv": "^16.5.0"
+		"prisma": "^6.8.2"
+	},
+	"dependencies": {
+		"@prisma/client": "6.8.2"
 	}
 }

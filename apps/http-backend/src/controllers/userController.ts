@@ -1,17 +1,43 @@
 import { Request, Response } from "express";
-import { sign }  from "jsonwebtoken";
+import { sign } from "jsonwebtoken";
 import { HTTP_JWT_SECRET } from "@repo/backend-common/config";
 import { SignUpSchema, SignInSchema } from "@repo/zodschemas/zod";
-export const userSignUp = (req: Request, res: Response) => {
+import { prismaClient } from "@repo/db/prismaClient";
+import crypto from "crypto";
+
+export const userSignUp = async (req: Request, res: Response) => {
+	console.log(HTTP_JWT_SECRET);
 
 	const email = req.body.email;
 	const username = req.body.username;
 	const password = req.body.password;
 
+	const hashPassword = crypto
+		.createHash("sha256")
+		.update(password)
+		.digest("hex");
+
 	const user = SignUpSchema.safeParse({ email, username, password });
+
 	if (!user.success) {
 		res.json({
 			message: "Invalid input",
+		});
+		return;
+	}
+
+	const dbInsert = await prismaClient.user.create({
+		data: {
+			username: username,
+			email: email,
+			password: hashPassword,
+			photo: "url",
+		},
+	});
+
+	if (!dbInsert) {
+		res.json({
+			message: "User not inserted into Database",
 		});
 		return;
 	}
@@ -20,11 +46,17 @@ export const userSignUp = (req: Request, res: Response) => {
 		message: "Sign Up successfull",
 	});
 };
-export const userSignIn = (req: Request, res: Response) => {
-	const password = req.body.password;
+export const userSignIn = async (req: Request, res: Response) => {
 	const username = req.body.username;
+	const password = req.body.password;
 
 	const user = SignInSchema.safeParse({ username, password });
+
+	const hashPassword = crypto
+		.createHash("sha256")
+		.update(password)
+		.digest("hex");
+
 	if (!user.success) {
 		res.json({
 			message: "Invalid input",
@@ -32,9 +64,22 @@ export const userSignIn = (req: Request, res: Response) => {
 		return;
 	}
 
-	// db call
+	const getUser = await prismaClient.user.findUnique({
+		where: {
+			username: username,
+			password: hashPassword,
+		},
+	});
 
-	const token = sign({ username }, HTTP_JWT_SECRET);
+	if (!getUser) {
+		res.json({
+			message: "Invalid User Credentials",
+		});
+		return;
+	}
+
+	const userId = getUser.id;
+	const token = sign({ userId }, HTTP_JWT_SECRET);
 
 	res.status(200).json({
 		message: "Sign In successfull",

@@ -7,7 +7,6 @@ export const userMiddleware = (
     res: Response,
     next: NextFunction
 ) => {
-    const email = req.body.email;
     const token = req.body.token;
     const decoded = jwt.verify(token, HTTP_JWT_SECRET);
 
@@ -17,6 +16,6 @@ export const userMiddleware = (
         });
     }
     // @ts-ignore
-    req.userId = decoded;
+    req.body.userId = decoded;
     next();
 };
