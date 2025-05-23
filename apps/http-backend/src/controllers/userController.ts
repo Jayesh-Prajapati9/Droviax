@@ -1,18 +1,18 @@
 import { Request, Response } from "express";
-import { sign } from "jsonwebtoken";
-// import { HTTP_JWT_SECRET } from "@repo/backend-common/config";
+import jwt from "jsonwebtoken";
+import { HTTP_JWT_SECRET } from "@repo/backend-common/config";
 import { SignUpSchema, SignInSchema } from "@repo/zodschemas/zod";
-import { prismaClient } from "@repo/db/prismaClient";
+import { prismaClient, prismaError } from "@repo/db/prismaClient";
 import crypto from "crypto";
 
-const HTTP_JWT_SECRET = "123456789";
-
 export const userSignUp = async (req: Request, res: Response) => {
+	console.log(HTTP_JWT_SECRET);
 	try {
 		const email = req.body.email;
 		const username = req.body.username;
 		const password = req.body.password;
 
+		console.log(email);
 		const hashPassword = crypto
 			.createHash("sha256")
 			.update(password)
@@ -23,6 +23,7 @@ export const userSignUp = async (req: Request, res: Response) => {
 		if (!user.success) {
 			res.json({
 				message: "Invalid input",
+				error: user.error.issues[0]?.message,
 			});
 			return;
 		}
@@ -46,11 +47,14 @@ export const userSignUp = async (req: Request, res: Response) => {
 		res.status(200).json({
 			message: "Sign Up successfull",
 		});
-	} catch (e) {
-		console.log(e);
-		res.status(411).json({
-			message: "User already exists",
-		});
+	} catch (error) {
+		if (error instanceof prismaError && error.code === "P2002") {
+			res.status(411).json({
+				message: "User already exists",
+			});
+		} else {
+			res.json({ error: error });
+		}
 	}
 };
 export const userSignIn = async (req: Request, res: Response) => {
@@ -86,7 +90,7 @@ export const userSignIn = async (req: Request, res: Response) => {
 	}
 
 	const userId = getUser.id;
-	const token = sign({ userId }, HTTP_JWT_SECRET);
+	const token = jwt.sign({ userId }, HTTP_JWT_SECRET);
 
 	res.status(200).json({
 		message: "Sign In successfull",
