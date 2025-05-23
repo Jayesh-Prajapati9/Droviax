@@ -1,11 +1,12 @@
-import Express from "express";
-import { userRoutes } from "./routes/userRoutes";
-import { roomRoutes } from "./routes/roomRoutes";
+import express from "express"
+import { roomRoutes } from "./routes/roomRoutes.js";
+import { userRoutes } from "./routes/userRoutes.js";
 
-const app = Express();
+
+const app = express()
 const port = 8000;
 
-app.use(Express.json());
+
 
 app.use("/api/user",userRoutes);
 app.use("/api/create-room",roomRoutes);
@@ -14,6 +15,7 @@ app.get("/", (req, res) => {
     res.status(200).json({
         message: "Express Server",
     });
+    return;
 });
 
 app.listen(port, () => {

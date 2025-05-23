@@ -1,8 +1,9 @@
-import Express, { Router } from "express";
-import { userMiddleware } from "../middleware/userMiddleware";
-import { createRoomId } from "../controllers/roomController";
+import express, { Router } from "express";
+import { createRoomId } from "../controllers/roomController.js";
+import { userMiddleware } from "../middleware/userMiddleware.js";
 
-const router: Router = Express.Router();
+
+const router: Router = express.Router();
 
 router.get("/create_room", userMiddleware, createRoomId);
 
