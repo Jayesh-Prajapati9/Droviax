@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { HTTP_JWT_SECRET } from "@repo/backend-common/config";
+// import { HTTP_JWT_SECRET } from "@repo/backend-common/config";
+const HTTP_JWT_SECRET = "123456789";
 
 export const userMiddleware = (
     req: Request,
