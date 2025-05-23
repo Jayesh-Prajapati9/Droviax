@@ -1,26 +1,27 @@
 {
-	"name": "http-backend",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"build": "tsc -b",
-		"start": "node ./dist/index.js",
-		"dev": "pnpm run build && pnpm run start"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"type": "commonjs",
-	"devDependencies": {
-		"@repo/backend-common": "workspace:*",
-		"@repo/typescript-config": "workspace:*",
-		"@repo/zodschemas": "workspace:*",
-		"@types/express": "^5.0.1",
-		"@types/jsonwebtoken": "^9.0.9",
-		"jsonwebtoken": "^9.0.2"
-	},
-	"dependencies": {
-		"@repo/db": "workspace:*"
-	}
+  "name": "http-backend-resolved",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+     "build": "tsc -b",
+    "start": "node ./dist/index.js",
+    "dev": "pnpm run build && pnpm run start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^5.0.1",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "@repo/backend-common": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@repo/zodschemas": "workspace:*",
+    "@repo/db": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9"
+  }
 }

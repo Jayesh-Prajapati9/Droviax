@@ -1,7 +1,8 @@
-import Express, { Router } from "express";
-import { userSignIn, userSignUp } from "../controllers/userController";
+import express, { Router } from "express";
+import { userSignIn, userSignUp } from "../controllers/userController.js";
 
-const router: Router = Express.Router();
+
+const router: Router = express.Router();
 
 router.get("/signup", userSignUp);
 router.get("/signin", userSignIn);
