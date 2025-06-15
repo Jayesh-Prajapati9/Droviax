@@ -4,6 +4,7 @@ import { HTTP_JWT_SECRET } from "@repo/backend-common/config";
 import { SignUpSchema, SignInSchema } from "@repo/zodschemas/zod";
 import { prismaClient, prismaError } from "@repo/db/prismaClient";
 import crypto from "crypto";
+import {users,User} from "@repo/ws-backend/wsUsers";
 
 export const userSignUp = async (req: Request, res: Response) => {
 	console.log(HTTP_JWT_SECRET);
@@ -91,9 +92,27 @@ export const userSignIn = async (req: Request, res: Response) => {
 
 	const userId = getUser.id;
 	const token = jwt.sign({ userId }, HTTP_JWT_SECRET);
+	console.log(userId);
 
 	res.status(200).json({
 		message: "Sign In successfull",
 		token: token,
+	});
+};
+
+export const getRoom = async (req: Request, res: Response) => {
+	console.log(users);
+	const connectedUser: User[] = [];
+	const userId = req.params.userId;
+	console.log(userId);
+	
+	users.forEach((user) => {
+		console.log(user.userId);
+		if (user.isAlive && user.userId === userId) {
+			connectedUser.push();
+		}
+	});
+	res.status(200).json({
+		message: JSON.stringify(connectedUser),
 	});
 };
