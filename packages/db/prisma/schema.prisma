@@ -14,20 +14,20 @@ model user {
   email    String @unique
   photo    String
   chats    chat[]
-  roomr    room[]
+  rooms    room[]
 }
 
 model chat {
   id      Int    @id @default(autoincrement())
   message String
   userId  String
-  roomId  Int
+  roomId  String
   user    user   @relation(fields: [userId], references: [id])
   rooms   room   @relation(fields: [roomId], references: [id])
 }
 
 model room {
-  id        Int      @id @default(autoincrement())
+  id        String @id @default(uuid())     
   adminId   String
   slug      String   @unique // Room name 
   createdAt DateTime @default(now())

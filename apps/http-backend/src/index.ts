@@ -8,7 +8,7 @@ const port = 8000;
 app.use(express.json());
 
 app.use("/api/user", userRoutes);
-app.use("/api/create-room", roomRoutes);
+app.use("/api/room", roomRoutes);
 
 app.get("/", (req, res) => {
 	res.status(200).json({

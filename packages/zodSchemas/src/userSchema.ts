@@ -31,6 +31,6 @@ export const SignInSchema = z.object({
 });
 
 export const RoomSchema = z.object({
-	roomSlug: z.string().length(5, { message: "Room id must be 5 char long" }),
-	adminId: z.number(),
+	roomSlug: z.string().min(5, { message: "Room id must be 5 char long" }),
+	adminId: z.string(),
 });
